@@ -1,0 +1,18 @@
+#
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", RUN{builtin}="kmod load xppen"
+
+#SUBSYSTEM=="input", GROUP="input", MODE="0666"
+#SUBSYSTEM=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", MODE:="666", GROUP="users"
+
+#SUBSYSTEM=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", MODE="0660", GROUP="plugdev", RUN="/bin/sh -c 'echo -n $id:1.0 > /sys/bus/usb/drivers/usbhid/unbind'"
+
+#SUBSYSTEM=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", MODE="0660", GROUP="plugdev"
+#ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", DRIVER="usbhid", RUN="/bin/sh -c 'echo -n $kernel >/sys/bus/usb/drivers/usbhid/unbind'"
+
+
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", RUN+="/etc/hotplug/xppen", RUN+="/bin/sh -c 'echo detected >/tmp/udev.event'"
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", OPTIONS+="ignore_device"
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", SYSCTL{usbhid.quirks=0x28bd:0x0075:0x0004}
+
+#SUBSYSTEMS=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", RUN+="/bin/sh -c 'echo k=%k  n=%n b=%b p=%p driver=$driver s=%s{file} P=%P name=$name r=%r S=%S  N=%N >/tmp/udev.info'"
+ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="28bd", ATTRS{idProduct}=="0075", RUN+="/bin/sh -e /etc/udev/rebind.sh %p"
