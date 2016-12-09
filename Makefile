@@ -9,4 +9,4 @@ clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 
 archive:
-	tar f - --exclude=.git -C ../ -c xppen | gzip -c9 > ../xppen-`date +%Y%m%d`.tgz
+	tar f - --exclude=.* -C ../ -c hanvon | gzip -c9 > ../xppen-`date +%Y%m%d`.tgz
